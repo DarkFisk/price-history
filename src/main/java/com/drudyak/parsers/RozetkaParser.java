@@ -14,8 +14,8 @@ import org.jsoup.select.Elements;
 
 public class RozetkaParser extends Parser {
     
-    private String LOGIN = "**********";
-    private String PASSWORD = "*******";
+    private String LOGIN = "drudyak@gmail.com";
+    private String PASSWORD = "**************";
     
     private Map<String, String> COOKIES;
 
@@ -26,10 +26,10 @@ public class RozetkaParser extends Parser {
             Connection.Response loginPageResponse = Jsoup.connect("https://my.rozetka.com.ua/signin/")
                     .method(Connection.Method.GET)
                     .execute();
-            System.out.println("User Sessiu ID: " + loginPageResponse.cookie("uid"));
+            System.out.println("User Session ID: " + loginPageResponse.cookie("uid"));
             
             // Submit the login form with correct request headers and params
-            Connection.Response loginRsponse = Jsoup.connect("https://my.rozetka.com.ua/cgi-bin/form.php?r=https%3A%2F%2Fmy.rozetka.com.ua%2Fsignin%2F&action=SignIn")
+            Connection.Response loginResponse = Jsoup.connect("https://my.rozetka.com.ua/cgi-bin/form.php?r=https%3A%2F%2Fmy.rozetka.com.ua%2Fsignin%2F&action=SignIn")
                     .method(Method.POST)
                     .headers(new HashMap<String, String>(){{
                         put("Accept", "text/javascript, text/html, application/xml, text/xml, */*");
@@ -41,13 +41,13 @@ public class RozetkaParser extends Parser {
                     }})
                     .ignoreContentType(true)
                     .data("cookieexists", "false")
-                    .data("login", "darkfisk@gmail.com")
-                    .data("password", "qwerty666")
+                    .data("login", LOGIN)
+                    .data("password", PASSWORD)
                     .data("request_token", loginPageResponse.cookie("uid"))
                     .cookies(loginPageResponse.cookies())
                     .execute();
             
-            COOKIES = loginRsponse.cookies();
+            COOKIES = loginResponse.cookies();
         } catch (IOException e) {
             e.printStackTrace();
         }
