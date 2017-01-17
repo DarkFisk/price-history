@@ -69,7 +69,7 @@ public class RozetkaParser extends Parser {
                 System.out.println("=============");
                 System.out.println("Name: " + productBox.select(".g-title-link").text());
                 System.out.println("Price: " + productBox.select(".g-price-uah").text());
-                System.out.println("Available: " + !productBox.attr("cless").contains("unavailable"));
+                System.out.println("Available: " + !productBox.attr("class").contains("unavailable"));
             }
         } catch(IOException e) {
             e.printStackTrace();
