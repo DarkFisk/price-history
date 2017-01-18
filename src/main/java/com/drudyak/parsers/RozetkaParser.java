@@ -15,7 +15,7 @@ import org.jsoup.select.Elements;
 public class RozetkaParser extends Parser {
     
     private String LOGIN = "drudyak@gmail.com";
-    private String PASSWORD = "**************";
+    private String PASSWORD = "";
     
     private Map<String, String> COOKIES;
 
