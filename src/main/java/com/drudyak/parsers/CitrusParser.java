@@ -14,6 +14,8 @@ public class CitrusParser extends Parser{
     private String LOGIN = "drudyak@gmail.com";
     private String PASSWORD = "";
 
+    private String TOKEN = "";
+
     private Map<String, String> COOKIES;
 
     protected void login() {
@@ -63,6 +65,7 @@ public class CitrusParser extends Parser{
                     .method(Connection.Method.GET)
                     .execute();
             Document loginPageDoc = Jsoup.parse(loginPageResponse.body());
+            TOKEN = loginPageDoc.select("input[name=\"_token\"]").val();
 //            System.out.println("User Session ID: " + loginPageResponse.cookie("uid"));
 
             // Submit the login form with correct request headers and params
@@ -78,7 +81,7 @@ public class CitrusParser extends Parser{
                         put("Upgrade-Insecure-Requests", "1");
                     }})
                     .ignoreContentType(true)
-                    .data("_token", loginPageDoc.select("input[name=\"_token\"]").val())
+                    .data("_token", TOKEN)
                     .data("identity", LOGIN)
                     .cookies(loginPageResponse.cookies())
                     .execute();
@@ -100,8 +103,8 @@ public class CitrusParser extends Parser{
             Connection.Response emailPageResponse = Jsoup.connect("https://my.citrus.ua/ru/auth/email")
                     .method(Connection.Method.GET)
                     .execute();
-            Document emailPageDoc = Jsoup.parse(emailPageResponse.body());
-//            System.out.println("User Session ID: " + loginPageResponse.cookie("uid"));
+//            Document emailPageDoc = Jsoup.parse(emailPageResponse.body());
+//            System.out.println("User Session ID: " + emailPageResponse.body());
 
             // Submit the login form with correct request headers and params
             Connection.Response emailResponse = Jsoup.connect("https://my.citrus.ua/ru/auth/email")
@@ -116,7 +119,7 @@ public class CitrusParser extends Parser{
                         put("Upgrade-Insecure-Requests", "1");
                     }})
                     .ignoreContentType(true)
-                    .data("_token", emailPageDoc.select("input[name=\"_token\"]").val())
+                    .data("_token", TOKEN)
                     .data("password", PASSWORD)
                     .cookies(emailPageResponse.cookies())
                     .execute();
