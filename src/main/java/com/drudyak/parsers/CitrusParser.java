@@ -100,9 +100,9 @@ public class CitrusParser extends Parser{
 
         try {
             // open the login page so that get User Session ID
-            Connection.Response emailPageResponse = Jsoup.connect("https://my.citrus.ua/ru/auth/email")
-                    .method(Connection.Method.GET)
-                    .execute();
+           // Connection.Response emailPageResponse = Jsoup.connect("https://my.citrus.ua/ru/auth/email")
+          //          .method(Connection.Method.GET)
+          //          .execute();
 //            Document emailPageDoc = Jsoup.parse(emailPageResponse.body());
 //            System.out.println("User Session ID: " + emailPageResponse.body());
 
@@ -121,7 +121,7 @@ public class CitrusParser extends Parser{
                     .ignoreContentType(true)
                     .data("_token", TOKEN)
                     .data("password", PASSWORD)
-                    .cookies(emailPageResponse.cookies())
+                    .cookies(COOKIES)
                     .execute();
 
             System.out.println(emailResponse.body());
